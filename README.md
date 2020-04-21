@@ -1,4 +1,4 @@
-# hybrid_precipitation_index
+# Hybrid Precipitation Index
 
 This repo contains example code that shows how to calculate the Hybrid Precipitation Index described in Chelton and Risien, 2020.
 
