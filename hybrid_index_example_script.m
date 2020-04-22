@@ -58,7 +58,7 @@ hold on
 plot(time,pcpexp10,'color','b','linewidth',1)
 plot(time,pcpexp20,'color','g','linewidth',1)
 plot(time,pcpexp36,'color','r','linewidth',1)
-legend('\tau = 3','\tau = 10','\tau = 20','\tau = 26','AutoUpdate','off','location','southwest')
+legend('\tau = 3','\tau = 10','\tau = 20','\tau = 36','AutoUpdate','off','location','southwest')
 plot(time,zeros(length(time),1),'color',[.5 .5 .5],'linewidth',.4)
 xlim([datenum(1948,1,1) datenum(2017,6,1)])
 datetick('x','keeplimits')
