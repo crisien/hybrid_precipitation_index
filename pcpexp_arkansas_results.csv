@@ -1,5 +1,5 @@
-%Arkansas hybrid precipitation index. alpha = 0; beta = 0; lagmax = 100
-%year,month,tau=3,tau=10,tau=20,tau=36
+#Arkansas hybrid precipitation index. alpha = 0; beta = 0; lagmax = 100
+#year,month,tau=3,tau=10,tau=20,tau=36
 1948,1,NaN,NaN,NaN,NaN
 1948,2,NaN,NaN,NaN,NaN
 1948,3,NaN,NaN,NaN,NaN
