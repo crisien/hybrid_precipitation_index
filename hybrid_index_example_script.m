@@ -9,7 +9,9 @@ time = datenum(data(:,1),data(:,2),1);
 %load f^-1 spectrum
 evapo = load('evapo.csv');
 
-%calculate exponentially weighted index for Arkansas
+%calculate exponentially weighted index for Arkansas based on the parameters 
+%of the exponentially weighted averages determined in Appendix B (see also Fig 10) 
+%of Chelton and Risien (2020)
 tau   = 5.051;
 alpha = 0.222;
 beta  = 0.250;
@@ -20,7 +22,7 @@ pcpexp = hybrid_index(pcp00, evapo, tau, lagmax, alpha, beta)';
 [~,~,p_xy_pcpexp,~] = cross_corr(pcpexp,pcp00,12,nan);
 [lag,~,p_xy_pdsi,~] = cross_corr(pdsi,pcp00,12,nan);
 
-%Plot the results
+%plot the results
 figure('units','normalized','outerposition',[0 0 .6 1])
 
 %this panel is equivalent to the middle panel of Fig. B2 in Chelton and Risien 2020
