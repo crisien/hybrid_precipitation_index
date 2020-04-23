@@ -8,3 +8,5 @@ SPI, PDSI and MCDI. Part 1: Development of the index. J. Hydrometeorol., Accepte
 Chelton, D. B., and C. M. Risien, 2020: A hybrid precipitation index inspired by the SPI,
 PDSI and MCDI. Part 2: Application to investigate precipitation variability along the
 west coast of North America. J. Hydrometeorol., revised manuscript under review.
+
+[![DOI](https://zenodo.org/badge/257687664.svg)](https://zenodo.org/badge/latestdoi/257687664)
