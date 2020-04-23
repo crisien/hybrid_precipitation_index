@@ -54,7 +54,7 @@ c-----------------------------------------------------------------------
 
 number_of_weights = 201;
 
-%.. this version assumes that inpts pcp and evapo are vectors and
+%.. this version assumes that inputs pcp and evapo are vectors and
 %.. not 2D arrays
 pcp   = pcp(:);
 evapo = evapo(:);
