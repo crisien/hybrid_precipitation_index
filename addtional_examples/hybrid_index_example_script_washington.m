@@ -66,4 +66,5 @@ datetick('x','keeplimits')
 ylim([-4 4])
 title('Washington PCPexp with \alpha = \beta = 0','fontweight','normal')
 set(gcf,'color','w');
-export_fig('pcpexp_washington_results','-pdf')
+%save figure using https://github.com/altmany/export_fig
+%export_fig('pcpexp_washington_results','-pdf')
