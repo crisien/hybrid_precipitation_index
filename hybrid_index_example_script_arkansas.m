@@ -67,4 +67,5 @@ datetick('x','keeplimits')
 ylim([-4 4])
 title('Arkansas PCPexp with \alpha = \beta = 0','fontweight','normal')
 set(gcf,'color','w');
-export_fig('pcpexp_arkansas_results','-pdf')
+%save figure using https://github.com/altmany/export_fig
+%export_fig('pcpexp_arkansas_results','-pdf')
