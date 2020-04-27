@@ -66,4 +66,5 @@ datetick('x','keeplimits')
 ylim([-4 4])
 title('Iowa PCPexp with \alpha = \beta = 0','fontweight','normal')
 set(gcf,'color','w');
-export_fig('pcpexp_iowa_results','-pdf')
+%save figure using https://github.com/altmany/export_fig
+%export_fig('pcpexp_iowa_results','-pdf')
