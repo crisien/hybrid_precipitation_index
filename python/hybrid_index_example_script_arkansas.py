@@ -7,11 +7,16 @@ Created on May 8, 2020
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
 import hybrid_pcp_index
+import numpy as np
 
 #load Arkansas precipiation anomalies and PDSI time series
 df = pd.read_csv (r'pcp_pdsi_arkansas.csv')
 pcp00 = df.values[:,2];
 pdsi = df.values[:,3];
+#rename year col. and convert to datetime
+df = df.rename(columns={'%year':'year'})
+df.insert(2,"day",list(np.ones(833).astype(int)),True)
+datetime = pd.to_datetime(df[['year','month','day']])
 
 #load f^-1 spectrum
 evapo = pd.read_csv (r'evapo.csv')
@@ -38,9 +43,9 @@ pcpexp36 = hybrid_pcp_index.hybrid_index(pcp00, evapo, 36.0, lagmax, alpha, beta
 
 #Plot the results for Arkansas
 output_file("Arkansas_hybrid_pcp_index.html", title="Arkansas")
-plot = figure(title= "Arkansas", x_axis_label= 'time', y_axis_label= 'index')
-plot.line(list(range(833)), pcpexp3, legend_label="Tau03", line_color="black", line_width = 2)
-plot.line(list(range(833)), pcpexp10, legend_label="Tau10", line_color="blue", line_width = 2)
-plot.line(list(range(833)), pcpexp20, legend_label="Tau20", line_color="green", line_width = 2)
-plot.line(list(range(833)), pcpexp36, legend_label="Tau36", line_color="red", line_width = 2)
+plot = figure(title= "Arkansas", x_axis_type='datetime', x_axis_label= 'time', y_axis_label= 'index')
+plot.line(datetime, pcpexp3, legend_label="Tau03", line_color="black", line_width = 2)
+plot.line(datetime, pcpexp10, legend_label="Tau10", line_color="blue", line_width = 2)
+plot.line(datetime, pcpexp20, legend_label="Tau20", line_color="green", line_width = 2)
+plot.line(datetime, pcpexp36, legend_label="Tau36", line_color="red", line_width = 2)
 show(plot)
