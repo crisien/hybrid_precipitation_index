@@ -9,4 +9,4 @@ Chelton, D. B., and C. M. Risien, 2020: A hybrid precipitation index inspired by
 PDSI and MCDI. Part 2: Application to investigate precipitation variability along the
 west coast of North America. J. Hydrometeorol., revised manuscript under review.
 
-[![DOI](https://zenodo.org/badge/257687664.svg)](https://zenodo.org/badge/latestdoi/257687664)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3818521.svg)](https://doi.org/10.5281/zenodo.3818521)
