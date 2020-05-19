@@ -6,7 +6,8 @@ Created on May 8, 2020
 """
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
-from hybrid_index import hybrid_index
+from bokeh.layouts import column
+from hybrid_index import hybrid_index, cross_corr
 import numpy as np
 
 #load Arkansas precipiation anomalies and PDSI time series
@@ -31,6 +32,10 @@ beta  = 0.250
 lagmax = 30
 pcpexp = hybrid_index(pcp00, evapo, tau, lagmax, alpha, beta)
 
+#calculate lagged correlations
+lag, R_xy, p_xy_pcpexp = cross_corr(np.array(pcpexp[lagmax:-lagmax]), pcp00[lagmax:-lagmax], 12)  #exclude nans
+lag, R_xy, p_xy_pdsi = cross_corr(pdsi, pcp00, 12)
+
 #calculate the Arkansas hybrid precipitation index for differrent values of tau
 #tau = 3, 10, 20, and 36
 lagmax = 100
@@ -43,10 +48,17 @@ pcpexp36 = hybrid_index(pcp00, evapo, 36.0, lagmax, alpha, beta)
 
 #Plot the results for Arkansas
 output_file("pcpexp_arkansas_results.html", title="Arkansas")
-plot = figure(title= "Arkansas", x_axis_type='datetime', x_axis_label= 'time', 
-              y_axis_label= 'index', plot_width=800, plot_height=400)
-plot.line(datetime, pcpexp3, legend_label="Tau03", line_color="black", line_width = 2)
-plot.line(datetime, pcpexp10, legend_label="Tau10", line_color="blue", line_width = 2)
-plot.line(datetime, pcpexp20, legend_label="Tau20", line_color="green", line_width = 2)
-plot.line(datetime, pcpexp36, legend_label="Tau36", line_color="red", line_width = 2)
-show(plot)
+#upper panel
+corr = figure(title= "Arkansas", x_axis_label= 'lag', y_axis_label= 'Correlation', 
+              plot_width=800, plot_height=400, x_range=(-12, 12), y_range=(-1, 1))
+corr.line(lag, p_xy_pcpexp, legend_label="Exp. Weighted Ave.(t) vs Precip. Anoms. (t+lag)", line_color="red", line_width = 1.4)
+corr.line(lag, p_xy_pdsi, legend_label="PDSI(t) vs Precip. Anoms. (t+lag)", line_color="black", line_width = 2.2)
+#lower panel
+ts = figure(x_axis_type='datetime', x_axis_label= 'time', y_axis_label= 'index', 
+            plot_width=800, plot_height=400, y_range=(-4, 4))
+ts.line(datetime, pcpexp3, legend_label="Tau03", line_color="black", line_width = 2)
+ts.line(datetime, pcpexp10, legend_label="Tau10", line_color="blue", line_width = 2)
+ts.line(datetime, pcpexp20, legend_label="Tau20", line_color="green", line_width = 2)
+ts.line(datetime, pcpexp36, legend_label="Tau36", line_color="red", line_width = 2)
+
+show(column(corr, ts))

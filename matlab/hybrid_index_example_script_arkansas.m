@@ -29,7 +29,7 @@ figure('units','normalized','outerposition',[0 0 .6 1])
 subplot(211)
 plot(lag,p_xy_pcpexp,'r','linewidth',1)
 hold on
-plot(lag,p_xy_pdsi,'k','linewidth',1)
+plot(lag,p_xy_pdsi,'k','linewidth',1.8)
 legend('Exp. Weighted Ave.(t) vs Precip. Anoms. (t+lag)','PDSI(t) vs Precip. Anoms. (t+lag)',...
     'AutoUpdate','off','location','northeast')
 plot(lag,zeros(25,1),'k')

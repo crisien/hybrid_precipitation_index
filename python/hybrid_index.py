@@ -109,7 +109,7 @@ def hybrid_index(pcp, evapo, tau, lagmax, alpha, beta):
             pcpexp.append(np.nan)
         else:
             pcpexpi = 0.0
-            for jj in range(0,lagmax):
+            for jj in range(0,lagmax+1):
                 imj = ii - jj
                 ipj = ii + jj
                 pcpexpi = pcpexpi + weight[jj] * pcpevapo[imj]
@@ -118,3 +118,61 @@ def hybrid_index(pcp, evapo, tau, lagmax, alpha, beta):
             pcpexp.append(pcpexpi)
 
     return pcpexp
+
+def cross_corr(x, y, nlags):
+    """ calculate cross correlations
+    
+    [lag, R_xy, P_xy] = cross_corr(x, y, nlags)
+    
+    input:
+       x,y the data sets
+       nlags are number of lags to process
+
+    output:
+       lag is lag from -nlag to +nlag
+       R_xy are covariances.  
+       P_xy are correlations
+       
+       Subroutine computes correlation between a(t) and b(t+lag). A positive 
+       lag therefore means that a(t) precedes b(t). In other words a(t) leads 
+       b(t).
+    """ 
+    
+    N = len(x)
+    
+    # initialize output 
+    R_xy = []
+    P_xy = []
+
+    cnt = -1
+    
+    for ll in range(-nlags,nlags+1):
+        cnt = cnt + 1
+        
+        # check for neg./pos lag
+        if ll < 0:
+            k = -1 * ll
+            lag2_id = np.arange(0,N-k)
+            lag1_id = lag2_id + k
+        else:
+            k = ll
+            lag1_id = np.arange(0,N-k)
+            lag2_id = lag1_id + k
+    
+        mean_1 = np.mean(x[lag1_id])
+        mean_2 = np.mean(y[lag2_id])
+        z1=x[lag1_id]-mean_1
+        z2=y[lag2_id]-mean_2
+    
+        # get the normalizing variances
+        std_1 = np.sqrt(np.dot(z1, z1) / len(lag2_id))
+        std_2 = np.sqrt(np.dot(z2, z2) / len(lag2_id))
+    
+        # estimate cov. and corr.
+        R_xy.append(np.dot(z1, z2) / len(lag2_id))
+        P_xy.append(R_xy[cnt] / (std_1 * std_2))
+
+    
+    lag = np.arange(-nlags,nlags+1)
+
+    return lag, R_xy, P_xy
