@@ -33,8 +33,8 @@ lagmax = 30
 pcpexp = hybrid_index(pcp00, evapo, tau, lagmax, alpha, beta)
 
 #calculate lagged correlations
-lag, R_xy, p_xy_pcpexp = cross_corr(np.array(pcpexp[lagmax:-lagmax]), pcp00[lagmax:-lagmax], 12)  #exclude nans
-lag, R_xy, p_xy_pdsi = cross_corr(pdsi, pcp00, 12)
+lag, R_xy, p_xy_pcpexp = cross_corr(np.array(pcpexp), pcp00, 12, np.nan)
+lag, R_xy, p_xy_pdsi = cross_corr(pdsi, pcp00, 12, np.nan)
 
 #calculate the Iowa hybrid precipitation index for differrent values of tau
 #tau = 3, 10, 20, and 36

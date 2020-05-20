@@ -119,14 +119,15 @@ def hybrid_index(pcp, evapo, tau, lagmax, alpha, beta):
 
     return pcpexp
 
-def cross_corr(x, y, nlags):
+def cross_corr(x, y, nlags, bad_flag):
     """ calculate cross correlations
     
-    [lag, R_xy, P_xy] = cross_corr(x, y, nlags)
+    [lag, R_xy, P_xy] = cross_corr(x, y, nlags, bad_flag)
     
     input:
        x,y the data sets
        nlags are number of lags to process
+       bad_flag is data value that indicates missing or bad data
 
     output:
        lag is lag from -nlag to +nlag
@@ -143,9 +144,15 @@ def cross_corr(x, y, nlags):
     # initialize output 
     R_xy = []
     P_xy = []
-
-    cnt = -1
     
+    if np.isnan(bad_flag):
+        bad_flag=1e35
+        x[np.isnan(x)]= bad_flag
+        y[np.isnan(y)]= bad_flag
+
+
+    # do the lags
+    cnt = -1
     for ll in range(-nlags,nlags+1):
         cnt = cnt + 1
         
@@ -158,6 +165,25 @@ def cross_corr(x, y, nlags):
             k = ll
             lag1_id = np.arange(0,N-k)
             lag2_id = lag1_id + k
+        
+        # find good data in x series
+        good_id = x[lag1_id]!=bad_flag
+        Ngoodx = sum(good_id)
+
+        # continue with this lag if ther are data
+        if Ngoodx>0:
+            lag1_id = lag1_id[good_id]
+            lag2_id = lag2_id[good_id]
+
+        # find good data in y-series where x series was good
+        good_id = y[lag2_id]!=bad_flag
+        Ngood = sum(good_id)
+
+        # continue only if there are data
+        if Ngood>0:
+            lag1_id = lag1_id[good_id]
+            lag2_id = lag2_id[good_id]
+
     
         mean_1 = np.mean(x[lag1_id])
         mean_2 = np.mean(y[lag2_id])
