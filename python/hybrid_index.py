@@ -47,7 +47,7 @@ def hybrid_index(pcp, evapo, tau, lagmax, alpha, beta):
     c  Reference:
     c    Chelton, D. B., and C. M. Risien, 2020: A hybrid precipitation
     c    index inspired by the SPI, PDSI and MCDI. Part 1: Development of
-    c    the index. J. Hydrometeorol., DOI: 10.1175/JHM-D-19-0230.1.
+    c    the index. Journal of Hydrometeorology, DOI: 10.1175/JHM-D-19-0230.1.
     c
     c-----------------------------------------------------------------------
     """
